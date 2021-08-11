@@ -568,6 +568,70 @@ struct sensor_regs imx219_mode7[] =
     {0x0100, 0x01},
 };
 
+struct sensor_regs imx219_mode8[] =
+{
+    {0x0100, 0x00}, // mode_select 0:SW standby 1:streaming
+    {0x30eb, 0x0c}, // access command sequence start
+    {0x30eb, 0x05}, // <- shouldn't this be the first one?
+    {0x300a, 0xff},
+    {0x300b, 0xff},
+    {0x30eb, 0x05},
+    {0x30eb, 0x09}, // access command sequence end
+    {0x0114, 0x01}, // csi_lane_mode 1:2-lane 3:4-lane
+    {0x0128, 0x00}, // DPHY_CTRL global timing setting 0:auto 1:manual
+    {0x012a, 0x18}, // EXCK_FREQ[15:8]
+    {0x012b, 0x00}, // EXCK_FREQ[7:0] // inck frequency MHz
+    {0x0164, 0x00}, // x address start [pixel] [11:8] (top left)
+    {0x0165, 0x00}, // x address start [pixel] [7:0]
+    {0x0166, 0x0c}, // x address end [pixel] [11:8] (bottom right)
+    {0x0167, 0xcf}, // x address end [pixel] [7:0] 
+    {0x0168, 0x00}, // y address start [lines] [11:8] (top left)
+    {0x0169, 0x00}, // y address start [lines] [7:0] (top left)
+    {0x016a, 0x09}, // y address end [lines] [11:8] (bottom right)
+    {0x016b, 0x9f}, // x address end [lines] [7:0] (bottom right)
+    {0x016c, 0x02}, // x output size (image data) [11:8]
+    {0x016d, 0x80}, // x output size (image data) [11:8]
+    {0x016e, 0x01},
+    {0x016f, 0xe0},
+    {0x0170, 0x01},
+    {0x0171, 0x01},
+    {0x0174, 0x03},
+    {0x0175, 0x03},
+    {0x018c, 0x0a},
+    {0x018d, 0x0a},
+    {0x0301, 0x05},
+    {0x0303, 0x01},
+    {0x0304, 0x03},
+    {0x0305, 0x03},
+    {0x0306, 0x00},
+    {0x0307, 0x39},
+    {0x0309, 0x0a},
+    {0x030b, 0x01},
+    {0x030c, 0x00},
+    {0x030d, 0x72},
+    {0x455e, 0x00},
+    {0x471e, 0x4b},
+    {0x4767, 0x0f},
+    {0x4750, 0x14},
+    {0x4540, 0x00},
+    {0x47b4, 0x14},
+    {0x4713, 0x30},
+    {0x478b, 0x10},
+    {0x478f, 0x10},
+    {0x4793, 0x10},
+    {0x4797, 0x0e},
+    {0x479b, 0x0e},
+    {0x0172, 0x03},
+    {0x0157, 0x00},
+    {0x0160, 0x02},
+    {0x0161, 0x39},
+    {0x0162, 0x0d},
+    {0x0163, 0xe7},
+    {0x015a, 0x00},
+    {0x015b, 0x2f},
+    {0x0100, 0x01},
+};
+
 // clang-format on
 
 struct mode_def imx219_modes[] = {
@@ -586,6 +650,7 @@ struct mode_def imx219_modes[] = {
 	    .timing = { 0, 0, 0, 0, 0 },
 	    .term = { 0, 0 },
 	    .black_level = 66,
+	    .binning = 1,
 	},
 	{
 	    .regs = imx219_mode1,
@@ -602,6 +667,7 @@ struct mode_def imx219_modes[] = {
 	    .timing = { 0, 0, 0, 0, 0 },
 	    .term = { 0, 0 },
 	    .black_level = 66,
+	    .binning = 1,
 	},
 	{
 	    .regs = imx219_mode2,
@@ -618,6 +684,7 @@ struct mode_def imx219_modes[] = {
 	    .timing = { 0, 0, 0, 0, 0 },
 	    .term = { 0, 0 },
 	    .black_level = 66,
+	    .binning = 1,
 	},
 	{
 	    .regs = imx219_mode3,
@@ -634,6 +701,7 @@ struct mode_def imx219_modes[] = {
 	    .timing = { 0, 0, 0, 0, 0 },
 	    .term = { 0, 0 },
 	    .black_level = 66,
+	    .binning = 1,
 	},
 	{
 	    .regs = imx219_mode4,
@@ -650,6 +718,7 @@ struct mode_def imx219_modes[] = {
 	    .timing = { 0, 0, 0, 0, 0 },
 	    .term = { 0, 0 },
 	    .black_level = 66,
+	    .binning = 1,
 	},
 	{
 	    .regs = imx219_mode5,
@@ -666,6 +735,7 @@ struct mode_def imx219_modes[] = {
 	    .timing = { 0, 0, 0, 0, 0 },
 	    .term = { 0, 0 },
 	    .black_level = 66,
+	    .binning = 1,
 	},
 	{
 	    .regs = imx219_mode6,
@@ -682,6 +752,7 @@ struct mode_def imx219_modes[] = {
 	    .timing = { 0, 0, 0, 0, 0 },
 	    .term = { 0, 0 },
 	    .black_level = 66,
+	    .binning = 1,
 	},
 	{
 	    .regs = imx219_mode7,
@@ -698,6 +769,24 @@ struct mode_def imx219_modes[] = {
 	    .timing = { 0, 0, 0, 0, 0 },
 	    .term = { 0, 0 },
 	    .black_level = 66,
+	    .binning = 2,
+	},
+	{
+	    .regs = imx219_mode8,
+	    .num_regs = NUM_ELEMENTS(imx219_mode8),
+	    .width = 640,
+	    .height = 480,
+	    .encoding = 0,
+	    .order = BAYER_ORDER_BGGR,
+	    .native_bit_depth = 10,
+	    .image_id = 0x2B,
+	    .data_lanes = 2,
+	    .min_vts = 484,
+	    .line_time_ns = 19517,
+	    .timing = { 0, 0, 0, 0, 0 },
+	    .term = { 0, 0 },
+	    .black_level = 66,
+	    .binning = 4,
 	},
 };
 
@@ -707,6 +796,51 @@ struct sensor_regs imx219_stop[] = {
 	// to power down
 	{ 0x0100, 0x00 }, // disable streaming
 };
+
+static int imx219_set_crop(const struct sensor_def *sensor, struct mode_def *sensor_mode,
+			   const struct raspiraw_crop *cfg)
+{
+	if (cfg->hinc >= 0)
+	{
+		modReg(sensor_mode, 0x0170, 0, 2, cfg->hinc, EQUAL);
+	}
+
+	if (cfg->vinc >= 0)
+	{
+		modReg(sensor_mode, 0x0171, 0, 2, cfg->vinc, EQUAL);
+	}
+
+	if (cfg->width > 0)
+	{
+		sensor_mode->width = cfg->width;
+		modReg(sensor_mode, 0x016C, 0, 3, cfg->width >> 8, EQUAL);
+		modReg(sensor_mode, 0x016D, 0, 7, cfg->width & 0xFF, EQUAL);
+	}
+
+	if (cfg->height > 0)
+	{
+		sensor_mode->height = cfg->height;
+		modReg(sensor_mode, 0x016E, 0, 3, cfg->height >> 8, EQUAL);
+		modReg(sensor_mode, 0x016D, 0, 7, cfg->height & 0xFF, EQUAL);
+	}
+
+	if (cfg->left >= 0)
+	{
+		int val = cfg->left * sensor_mode->binning;
+		modReg(sensor_mode, 0x0164, 0, 3, val >> 8, EQUAL);
+		modReg(sensor_mode, 0x0165, 0, 7, val & 0xFF, EQUAL);
+		
+	}
+
+	if (cfg->top >= 0)
+	{
+		int val = cfg->top * sensor_mode->binning;
+		modReg(sensor_mode, 0x0168, 0, 3, val >> 8, EQUAL);
+		modReg(sensor_mode, 0x0169, 0, 7, val & 0xFF, EQUAL);
+	}
+
+	return 0;
+}
 
 // ID, exposure, and gain register settings taken from
 // https://android.googlesource.com/kernel/bcm/+/android-bcm-tetra-3.10-lollipop-wear-release/drivers/media/video/imx219.c
@@ -738,6 +872,8 @@ struct sensor_def imx219 = {
 
 	.gain_reg = 0x0157,
 	.gain_reg_num_bits = 8, // Only valid up to 230.
+
+	.set_crop = imx219_set_crop,
 };
 
 #endif
